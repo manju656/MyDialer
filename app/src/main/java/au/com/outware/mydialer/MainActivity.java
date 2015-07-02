@@ -16,6 +16,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.ItemLongClick;
 import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.ViewById;
 
@@ -45,9 +46,18 @@ public class MainActivity extends AppCompatActivity {
     @ItemClick(R.id.lst_recent_calls)
     void onItemSelected(CallDetails selectedItem) {
         final String phNumber = selectedItem.getPhNumber();
-        System.out.println(phNumber);
-        mNumTxt.setText("");
         mNumTxt.setText(phNumber);
+    }
+
+    @ItemLongClick(R.id.lst_recent_calls)
+    void onItemLongClick(CallDetails selectedItem){
+        final String phNumber = selectedItem.getPhNumber();
+        final String name = selectedItem.getCallerName();
+        String shareBody = name+" - "+phNumber;
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share With"));
     }
 
     @Click(R.id.btn_call)
@@ -70,25 +80,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
