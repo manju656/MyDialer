@@ -1,0 +1,12 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"/>
+    <style name="dialer.EditText" parent="android:Widget.EditText">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    <style name="dialer.TextView" parent="android:Widget.TextView">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+</resources>
